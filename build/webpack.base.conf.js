@@ -3,6 +3,7 @@ const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
+let webpack  = require("webpack");
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -27,6 +28,8 @@ module.exports = {
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src'),
+      'mui':path.resolve(__dirname, '../static/mui/js/mui.min.js'),
+      'vendor': path.resolve(__dirname, '../src/vendor'),//新增加一行
     }
   },
   module: {
@@ -44,6 +47,7 @@ module.exports = {
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
+        // loader: 'file-loader',
         options: {
           limit: 10000,
           name: utils.assetsPath('img/[name].[hash:7].[ext]')
@@ -58,13 +62,14 @@ module.exports = {
         }
       },
       {
-        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+        test: /\.(woff2?|eot|otf)(\?.*)?$/,
         loader: 'url-loader',
         options: {
           limit: 10000,
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
-      }
+      },
+      { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, use: 'url-loader' },
     ]
   },
   node: {
@@ -78,5 +83,14 @@ module.exports = {
     net: 'empty',
     tls: 'empty',
     child_process: 'empty'
-  }
+  },
+  plugins:[
+    new webpack.ProvidePlugin({
+      mui: "mui",
+      "window.mui": "mui",
+      jQuery: "jquery",
+      $: "jquery"
+    }),   //这里是数组中的数据，所以要使用 “，”
+  ]
+
 }

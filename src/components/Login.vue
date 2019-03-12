@@ -34,19 +34,41 @@
       }
     },
     methods:{
-      toMain(){
-        this.$http.post()
+      toMain() {
+        let _this=this;
+        this.$router.push('/index');
+       //  let data={};
+       //  _this.$http.post(_this.$url.baseUrl+'currentdata/current.do?project_id=1',data).then(res=>{
+       //   console.log(res);
+       // })
+
+       let data={
+         // username:this.username,
+         // password:this.password
+       };
+       // this.$http.post('/currentdata/current.do?project_id=1',data).then(res=>{
+       //   console.log(res);
+       // })
+       //  $.ajax({
+       //    type:"post",
+       //    url:_this.$url.baseUrl+'/currentdata/current.do?project_id=1',
+       //    data:{},
+       //    success:(res)=>{
+       //      console.log(res);
+       //    }
+       //  })
       }
     },
     mounted(){
-      this.$mui.ready(()=>{
-        this.$mui.init({
+      let _this=this;
+      mui.ready(()=>{
+        mui.init({
           statusBarBackground:"#f7f7f7"
         });
         let loginButton = document.getElementById('login');
         loginButton.addEventListener('tap',()=>{
-          console.log(1);
-        })
+          _this.toMain();
+          })
       })
     }
   }
